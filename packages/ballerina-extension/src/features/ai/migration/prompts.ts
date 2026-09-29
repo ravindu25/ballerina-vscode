@@ -381,8 +381,9 @@ ${keepStructure ? `### Original Source File Structure Preserved
 This project was migrated with **\`--keep-structure\`** enabled. Each \`.bal\` file corresponds
 to one original source file. The source filename and its directory path are encoded into the \`.bal\`
 filename. For ${filenameEncodingHint}.
-**Do not assume the \`.bal\` filename exactly matches the source filename** — use \`migration_source_list\`
-and \`file_list\` together to establish the mapping.
+**Do not assume the \`.bal\` filename exactly matches the source filename** — compare the \`migration_source_list\`
+output against the \`.bal\` paths in the \`<codebase_structure>\` listing from your initial message to establish
+the mapping, and \`file_read\` the candidate file to confirm when the encoded name is ambiguous.
 
 The BI standard layout (\`functions.bal\`, \`main.bal\`, \`data_mappings.bal\`, etc.) does NOT apply here.
 **Do NOT reorganize, rename, or merge files into the BI layout.**` : `### Default BI File Structure
@@ -491,7 +492,7 @@ For each **non-test** source file, determine its coverage status in the Ballerin
 
 **Do NOT apply ✅/⚠️/❌ to test files** — just list their paths in the TESTS section.
 
-${keepStructure ? `**Note (--keep-structure):** Each \`.bal\` file maps 1:1 to a source file. Use \`file_list\` and \`migration_source_list\` together to establish which \`.bal\` corresponds to which source file by comparing encoded file paths in the names.` : ""}
+${keepStructure ? `**Note (--keep-structure):** Each \`.bal\` file maps 1:1 to a source file. Compare the \`migration_source_list\` output with the \`.bal\` paths in the \`<codebase_structure>\` listing from your initial message to establish which \`.bal\` corresponds to which source file by comparing encoded file paths in the names.` : ""}
 
 **Step 4: Output your inventory**
 
@@ -581,7 +582,7 @@ For each source file in your work plan:
    type definitions — everything meaningful.
 3. **Locate the Ballerina counterpart**:
    ${keepStructure
-       ? '- Use `migration_source_list` + `file_list` to find the matching `.bal` file (names are encoded, not exact).'
+       ? '- Match the source path against the `.bal` paths in the `<codebase_structure>` listing from your initial message (names are encoded, not exact), then `file_read` the candidate to confirm.'
        : '- Map to the appropriate BI layout file using the source file type table.'}
 4. **Verify completeness**: Does the Ballerina code implement every construct from the source?
    Check for: missing flows, stub functions, incomplete DataWeave translations, missing type definitions,
